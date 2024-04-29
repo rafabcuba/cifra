@@ -10,6 +10,15 @@ use CodeIgniter\Router\RouteCollection;
 $routes->group('', ['filter' => 'AuthCheck'], static function ($routes) {
   $routes->get('/', 'Home::index');
   $routes->get('/dashboard', 'Dashboard::index');
+
+  $routes->get('users-list', 'UserCrud::index');
+  $routes->get('user-form', 'UserCrud::create');
+  $routes->post('user-submit-form', 'UserCrud::store');
+  $routes->get('user-edit/(:num)', 'UserCrud::edit/$1');
+  $routes->post('user-update', 'UserCrud::update');
+  $routes->get('user-delete/(:num)', 'UserCrud::delete/$1');
+
+  $routes->get('municipios-list', 'MunicipioCrud::index');
 });
 
 

@@ -1,52 +1,61 @@
-# CodeIgniter 4 Application Starter
+# Aplicación de gestión de disciplina informativa ONEI
 
-## What is CodeIgniter?
+## Instalación
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+Crear una carpeta para el proyecto y copiar el contenido en la misma.
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+Conectado a internet ejecutar el comando `composer install` (este descargará todas las dependencias del proyecto y creará la carpeta vendor)
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+copiar `env` a `.env` y personaliza la app, específicamente las Secciones `ENVIROMENT` y `DATABASE` Ejemplo:
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+# ENVIRONMENT
+CI_ENVIRONMENT = development
 
-## Installation & updates
+# DATABASE
+database.default.hostname = localhost
+database.default.database = indicadoresci
+database.default.username = root
+database.default.password = 
+database.default.DBDriver = MySQLi
+database.default.DBPrefix =
+database.default.port = 3306
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+creas la base de dato ejecutando el siguiente comando desde la linea de comandos:
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+php spark db:create
 
-## Setup
+esto creará la base de datos...
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+luego ejecutas las `migraciones` esto generará las tablas en la BD, ahora solamente se creará la de usuario:
 
-## Important Change with index.php
+php spark migrate
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+Alimentar la base de datos (esto llena los nomencladores con los valores por defecto):
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+php spark db:seed UserSeeder
+php spark db:seed MunicipioSeeder
 
-**Please** read the user guide for a better explanation of how CI4 works!
+Nota: se crea un usuario por defecto para la app
 
-## Repository Management
+email: admin@onei.cu
+password: 123456
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+cigniter trae su propio servidor web para desarrollo por lo que no tienes que configurar tu servidor local, para ejecutarlo es el siguiente comando:
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+php spark serve
+
+con esto se levanta el server y puedes acceder website, si ves en la consola te indica como, pero puedes abrir en el navegador la url:
+
+http://localhost:8080
+
+
+Nota: He dejado una url para que puedes crear usuarios, con esta opción puedes `registrar` un usuario que puedes usar para loguearte y revisar el proyecto hasta donde está.
+
+
+http://localhost:8080/auth/register
+
+
+Revisa los requerimientos del servidor si tienes algún otro error, debe funcionar pero por si acaso...
 
 ## Server Requirements
 

@@ -4,26 +4,19 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class AddUser extends Migration
+class Municipios extends Migration
 {
     public function up()
     {
+        //
         $this->forge->addField([
-            'id' => [
+			'id' => [
                 'type'           => 'INT',
                 'constraint'     => 5,
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'name' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '255',
-            ],
-            'email' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '255',
-            ],
-            'password' => [
+            'nombre' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
             ],
@@ -36,14 +29,13 @@ class AddUser extends Migration
             'deleted_at' => [
                 'type'      =>  'DATETIME',
             ],
-            
-        ]);
-        $this->forge->addKey('id', true);
-        $this->forge->createTable('users');
+		]);
+		$this->forge->addKey('id', true);
+        $this->forge->createTable('municipios');
     }
 
     public function down()
     {
-        $this->forge->dropTable('users');
+        $this->forge->dropTable('municipios');
     }
 }

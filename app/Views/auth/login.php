@@ -52,12 +52,6 @@
                   <input type="submit" value="Entrar!" class="btn login_btn">
               </div>
 
-              <!-- <div class="text-white mt-2">
-                <label class="text-right">
-                  <a href="{{ path('app_forgot_password_request')}}">Olvidé mi contraseña</a>
-                </label>
-              </div> -->
-                        
             </form>
           </div>
 

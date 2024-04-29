@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class UserModel extends Model
+class MunicipioModel extends Model
 {
-    protected $table            = 'users';
+    protected $table            = 'municipios';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['name','email','password','admin'];
+    protected $allowedFields    = ['nombre'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

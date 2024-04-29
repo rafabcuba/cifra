@@ -18,7 +18,7 @@
             <i class="fa-solid fa-file-pen"></i> Captación
             </a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#"><i class="fa fa-file-pen" aria-hidden="true"></i> Captar disciplina estadística</a></li>
+                <li><a class="dropdown-item" href="#"><i class="fa fa-file-pen"></i> Captar disciplina estadística</a></li>
                 <li><a class="dropdown-item" href="#"><i class="fa fa-edit" aria-hidden="true"></i> Captar datos 2</a></li>
                 <li><a class="dropdown-item" href="#"><i class="fa fa-edit" aria-hidden="true"></i> Captar datos 3</a></li>
                 <li><a class="dropdown-item" href="#"><i class="fa fa-edit" aria-hidden="true"></i> Captar datos 4</a></li>
@@ -40,17 +40,21 @@
                 <a class="nav-link" href="#"><i class="fa fa-cog" aria-hidden="true"></i> Administración</a>
             </li> -->
 
+            <?php if($userInfo['admin']): ?>
+
             <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fa fa-cog" aria-hidden="true"></i> Administración
             </a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-users"></i> Gestionar usuarios</a></li>
-                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-location-dot"></i> Municipios</a></li>
+                <li><a class="dropdown-item" href="<?= site_url('users-list'); ?>"><i class="fa-solid fa-users"></i> Gestionar usuarios</a></li>
+                <li><a class="dropdown-item" href="<?= site_url('municipios-list'); ?>"><i class="fa-solid fa-location-dot"></i> Municipios</a></li>
                 <li><a class="dropdown-item" href="#"><i class="fa-solid fa-table-list"></i> Tipo</a></li>
                 <li><a class="dropdown-item" href="#"><i class="fa-solid fa-building"></i> Entidades</a></li>
             </ul>
             </li>
+
+            <?php endif; ?>
 
             <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
