@@ -26,7 +26,7 @@ php spark db:create
 
 esto creará la base de datos...
 
-luego ejecutas las `migraciones` esto generará las tablas en la BD, ahora solamente se creará la de usuario:
+luego ejecutas las `migraciones` esto generará las tablas en la BD:
 
 php spark migrate
 
