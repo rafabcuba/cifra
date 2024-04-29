@@ -19,6 +19,11 @@ $routes->group('', ['filter' => 'AuthCheck'], static function ($routes) {
   $routes->get('user-delete/(:num)', 'UserCrud::delete/$1');
 
   $routes->get('municipios-list', 'MunicipioCrud::index');
+  $routes->get('municipio-form', 'MunicipioCrud::create');
+  $routes->post('municipio-submit-form', 'MunicipioCrud::store');
+  $routes->get('municipio-edit/(:num)', 'MunicipioCrud::edit/$1');
+  $routes->post('municipio-update', 'MunicipioCrud::update');
+  $routes->get('municipio-delete/(:num)', 'MunicipioCrud::delete/$1');
 });
 
 
