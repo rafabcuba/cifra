@@ -34,6 +34,7 @@ Alimentar la base de datos (esto llena los nomencladores con los valores por def
 
 php spark db:seed UserSeeder
 php spark db:seed MunicipioSeeder
+php spark db:seed TipoSeeder
 
 Nota: se crea un usuario por defecto para la app
 

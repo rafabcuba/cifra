@@ -24,6 +24,20 @@ $routes->group('', ['filter' => 'AuthCheck'], static function ($routes) {
   $routes->get('municipio-edit/(:num)', 'MunicipioCrud::edit/$1');
   $routes->post('municipio-update', 'MunicipioCrud::update');
   $routes->get('municipio-delete/(:num)', 'MunicipioCrud::delete/$1');
+
+  $routes->get('tipos-list', 'TipoCrud::index');
+  $routes->get('tipo-form', 'TipoCrud::create');
+  $routes->post('tipo-submit-form', 'TipoCrud::store');
+  $routes->get('tipo-edit/(:num)', 'TipoCrud::edit/$1');
+  $routes->post('tipo-update', 'TipoCrud::update');
+  $routes->get('tipo-delete/(:num)', 'TipoCrud::delete/$1');
+
+  $routes->get('formularios-list', 'FormularioCrud::index');
+  $routes->get('formulario-form', 'FormularioCrud::create');
+  $routes->post('formulario-submit-form', 'FormularioCrud::store');
+  $routes->get('formulario-edit/(:num)', 'FormularioCrud::edit/$1');
+  $routes->post('formulario-update', 'FormularioCrud::update');
+  $routes->get('formulario-delete/(:num)', 'FormularioCrud::delete/$1');
 });
 
 

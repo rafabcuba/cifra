@@ -49,7 +49,8 @@
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="<?= site_url('users-list'); ?>"><i class="fa-solid fa-users"></i> Gestionar usuarios</a></li>
                 <li><a class="dropdown-item" href="<?= site_url('municipios-list'); ?>"><i class="fa-solid fa-location-dot"></i> Municipios</a></li>
-                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-table-list"></i> Tipo</a></li>
+                <li><a class="dropdown-item" href="<?= site_url('tipos-list'); ?>"><i class="fa-solid fa-table-list"></i> Tipo de entidad</a></li>
+                <li><a class="dropdown-item" href="<?= site_url('formularios-list'); ?>"><i class="fa-solid fa-edit"></i> Formularios</a></li>
                 <li><a class="dropdown-item" href="#"><i class="fa-solid fa-building"></i> Entidades</a></li>
             </ul>
             </li>
