@@ -16,7 +16,7 @@ class MunicipioSeeder extends Seeder
         while (($data = fgetcsv($csvFile, 2000, ",")) !== FALSE) {
             if (!$firstline) {
 				$object = new MunicipioModel;
-				$object->insert([
+				$object->insert((object)[
 					"nombre" => $data['1']
 				]);
             }

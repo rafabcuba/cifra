@@ -4,25 +4,38 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\HTTP\RequestInterface;
+use Psr\Log\LoggerInterface;
 use App\Models\UserModel;
 use App\Models\FormularioModel;
 
 class FormularioCrud extends BaseController
 {
+    protected $userModel,$formularioModel,$userInfo;
+
+    public function initController(
+        RequestInterface $request,
+        ResponseInterface $response,
+        LoggerInterface $logger
+    ) {
+        parent::initController($request, $response, $logger);
+
+        $this->userModel = new UserModel();
+        $this->formularioModel = new FormularioModel();
+
+        $loggedUserId = session()->get('loggedInUser');
+        $this->userInfo = $this->userModel->find($loggedUserId);
+    }
+
     public function index()
     {
         //
-        $userModel = new UserModel();
-        $formularioModel = new formularioModel();
-        $loggedUserId = session()->get('loggedInUser');
-        $userInfo = $userModel->find($loggedUserId);
-
         $headerData = [
             'title' => 'Tipos',
-            'userInfo' => $userInfo,
+            'userInfo' => $this->userInfo,
         ];
 
-        $data['formularios'] = $formularioModel->orderBy('id', 'ASC')->findAll();
+        $data['formularios'] = $this->formularioModel->orderBy('id', 'ASC')->findAll();
 
         return view('header', $headerData)
             . view('menu')
@@ -32,13 +45,9 @@ class FormularioCrud extends BaseController
 
     public function create()
     {
-        $userModel = new UserModel();
-        $loggedUserId = session()->get('loggedInUser');
-        $userInfo = $userModel->find($loggedUserId);
-
         $headerData = [
             'title' => 'Usuarios',
-            'userInfo' => $userInfo,
+            'userInfo' => $this->userInfo,
         ];
 
         return view('header', $headerData)
@@ -49,29 +58,22 @@ class FormularioCrud extends BaseController
 
     public function store()
     {
-        $formularioModel = new formularioModel();
-        $data = [
+        $data = (object)[
             'nombre' => $this->request->getVar('name'),
             'descripcion' => $this->request->getVar('descripcion'),
         ];
-    $formularioModel->insert($data);
-    return $this->response->redirect(site_url('/formularios-list'));
+        $this->formularioModel->insert($data);
+        return $this->response->redirect(site_url('/formularios-list'));
     }
 
     public function edit($id = null)
     {
-        $userModel = new UserModel();
-        $loggedUserId = session()->get('loggedInUser');
-        $userInfo = $userModel->find($loggedUserId);
-
         $headerData = [
             'title' => 'Editar formulario',
-            'userInfo' => $userInfo,
+            'userInfo' => $this->userInfo,
         ];
 
-        $formularioModel = new formularioModel();
-
-        $data['formulario_obj'] = $formularioModel->where('id',$id)->first();
+        $data['formulario_obj'] = $this->formularioModel->where('id',$id)->first();
 
         return view('header', $headerData)
             . view('menu')
@@ -81,21 +83,19 @@ class FormularioCrud extends BaseController
 
     public function update()
     {
-        $formularioModel = new formularioModel();
         $id = $this->request->getVar('id');
-        $data = [
+        $data = (object)[
             'nombre' => $this->request->getVar('name'),
             'descripcion' => $this->request->getVar('descripcion'),
         ];
 
-        $formularioModel->update($id,$data);
+        $this->formularioModel->update($id,$data);
         return $this->response->redirect(site_url('/formularios-list'));
     }
 
     public function delete($id = null)
     {
-        $formularioModel = new formularioModel();
-        $data['formulario'] = $formularioModel->where('id',$id)->delete($id);
+        $data['formulario'] = $this->formularioModel->where('id',$id)->delete($id);
         return $this->response->redirect(site_url('/formularios-list'));
     }
 }

@@ -16,7 +16,7 @@ class TipoSeeder extends Seeder
         while (($data = fgetcsv($csvFile, 2000, ",")) !== FALSE) {
             if (!$firstline) {
 				$object = new TipoModel;
-				$object->insert([
+				$object->insert((object)[
 					"nombre" => $data['1']
 				]);
             }

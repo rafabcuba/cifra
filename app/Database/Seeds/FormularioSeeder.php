@@ -16,7 +16,7 @@ class FormularioSeeder extends Seeder
         while (($data = fgetcsv($csvFile, 2000, ",")) !== FALSE) {
             if (!$firstline) {
 				$object = new FormularioModel;
-				$object->insert([
+				$object->insert((object)[
 					"nombre" => $data['1'],
                     "descripcion" => $data['2'],
 				]);

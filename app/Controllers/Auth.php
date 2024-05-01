@@ -38,14 +38,6 @@ class Auth extends BaseController
      */
     public function registerUser()
     {
-        //Validate user input fields
-        // $validated = $this->validate([
-        //     'name' => 'required',
-        //     'email' => 'required|valid_email',
-        //     'password' => 'required|min_length[5]',
-        //     'passwordConf' => 'required|min_length[5]|matches[password]'
-        // ]);
-
         $validated = $this->validate([
             'name' => [
                 'rules' => 'required',
@@ -89,14 +81,11 @@ class Auth extends BaseController
         $password=$this->request->getPost('password');
         $passwordConf=$this->request->getPost('passwordConf');
 
-        $data = [
+        $data = (object)[
             'name' => $name,
             'email' => $email,
             'password' => Hash::encrypt($password)
         ];
-
-        // var_dump($data);
-        // die();
 
         $userModel = new UserModel();
         $query = $userModel->insert($data);

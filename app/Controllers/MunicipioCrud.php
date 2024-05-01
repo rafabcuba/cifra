@@ -4,25 +4,38 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\HTTP\RequestInterface;
+use Psr\Log\LoggerInterface;
 use App\Models\MunicipioModel;
 use App\Models\UserModel;
 
 class MunicipioCrud extends BaseController
 {
+    protected $userModel,$municipioModel,$userInfo;
+
+    public function initController(
+        RequestInterface $request,
+        ResponseInterface $response,
+        LoggerInterface $logger
+    ) {
+        parent::initController($request, $response, $logger);
+
+        $this->userModel = new UserModel();
+        $this->municipioModel = new municipioModel();
+
+        $loggedUserId = session()->get('loggedInUser');
+        $this->userInfo = $this->userModel->find($loggedUserId);
+    }
+
     public function index()
     {
         //
-        $userModel = new UserModel();
-        $municipioModel = new municipioModel();
-        $loggedUserId = session()->get('loggedInUser');
-        $userInfo = $userModel->find($loggedUserId);
-
         $headerData = [
             'title' => 'Municipios',
-            'userInfo' => $userInfo,
+            'userInfo' => $this->userInfo,
         ];
 
-        $data['municipios'] = $municipioModel->orderBy('id', 'ASC')->findAll();
+        $data['municipios'] = $this->municipioModel->orderBy('id', 'ASC')->findAll();
 
         return view('header', $headerData)
             . view('menu')
@@ -32,13 +45,9 @@ class MunicipioCrud extends BaseController
 
     public function create()
     {
-        $userModel = new UserModel();
-        $loggedUserId = session()->get('loggedInUser');
-        $userInfo = $userModel->find($loggedUserId);
-
         $headerData = [
             'title' => 'Usuarios',
-            'userInfo' => $userInfo,
+            'userInfo' => $this->userInfo,
         ];
 
         return view('header', $headerData)
@@ -49,28 +58,21 @@ class MunicipioCrud extends BaseController
 
     public function store()
     {
-        $municipioModel = new MunicipioModel();
-        $data = [
+        $data = (object)[
             'nombre' => $this->request->getVar('name'),
         ];
-    $municipioModel->insert($data);
+    $this->municipioModel->insert($data);
     return $this->response->redirect(site_url('/municipios-list'));
     }
 
     public function edit($id = null)
     {
-        $userModel = new UserModel();
-        $loggedUserId = session()->get('loggedInUser');
-        $userInfo = $userModel->find($loggedUserId);
-
         $headerData = [
             'title' => 'Editar usuario',
-            'userInfo' => $userInfo,
+            'userInfo' => $this->userInfo,
         ];
 
-        $municipioModel = new MunicipioModel();
-
-        $data['municipio_obj'] = $municipioModel->where('id',$id)->first();
+        $data['municipio_obj'] = $this->municipioModel->where('id',$id)->first();
 
         return view('header', $headerData)
             . view('menu')
@@ -80,20 +82,18 @@ class MunicipioCrud extends BaseController
 
     public function update()
     {
-        $municipioModel = new MunicipioModel();
         $id = $this->request->getVar('id');
-        $data = [
+        $data = (object)[
             'nombre' => $this->request->getVar('name'),
         ];
 
-        $municipioModel->update($id,$data);
+        $this->municipioModel->update($id,$data);
         return $this->response->redirect(site_url('/municipios-list'));
     }
 
     public function delete($id = null)
     {
-        $municipioModel = new MunicipioModel();
-        $data['municipio'] = $municipioModel->where('id',$id)->delete($id);
+        $data['municipio'] = $this->municipioModel->where('id',$id)->delete($id);
         return $this->response->redirect(site_url('/municipios-list'));
     }
 

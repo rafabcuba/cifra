@@ -38,6 +38,13 @@ $routes->group('', ['filter' => 'AuthCheck'], static function ($routes) {
   $routes->get('formulario-edit/(:num)', 'FormularioCrud::edit/$1');
   $routes->post('formulario-update', 'FormularioCrud::update');
   $routes->get('formulario-delete/(:num)', 'FormularioCrud::delete/$1');
+
+  $routes->get('entidades-list', 'EntidadCrud::index');
+  $routes->get('entidad-form', 'EntidadCrud::create');
+  $routes->post('entidad-submit-form', 'EntidadCrud::store');
+  $routes->get('entidad-edit/(:num)', 'EntidadCrud::edit/$1');
+  $routes->post('entidad-update', 'EntidadCrud::update');
+  $routes->get('entidad-delete/(:num)', 'EntidadCrud::delete/$1');
 });
 
 

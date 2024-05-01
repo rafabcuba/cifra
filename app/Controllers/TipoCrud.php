@@ -4,25 +4,38 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\HTTP\RequestInterface;
+use Psr\Log\LoggerInterface;
 use App\Models\TipoModel;
 use App\Models\UserModel;
 
 class TipoCrud extends BaseController
 {
+    protected $userModel,$tipoModel,$userInfo;
+
+    public function initController(
+        RequestInterface $request,
+        ResponseInterface $response,
+        LoggerInterface $logger
+    ) {
+        parent::initController($request, $response, $logger);
+
+        $this->userModel = new UserModel();
+        $this->tipoModel = new TipoModel();
+
+        $loggedUserId = session()->get('loggedInUser');
+        $this->userInfo = $this->userModel->find($loggedUserId);
+    }
+
     public function index()
     {
         //
-        $userModel = new UserModel();
-        $tipoModel = new tipoModel();
-        $loggedUserId = session()->get('loggedInUser');
-        $userInfo = $userModel->find($loggedUserId);
-
         $headerData = [
             'title' => 'Tipos',
-            'userInfo' => $userInfo,
+            'userInfo' => $this->userInfo,
         ];
 
-        $data['tipos'] = $tipoModel->orderBy('id', 'ASC')->findAll();
+        $data['tipos'] = $this->tipoModel->orderBy('id', 'ASC')->findAll();
 
         return view('header', $headerData)
             . view('menu')
@@ -32,13 +45,10 @@ class TipoCrud extends BaseController
 
     public function create()
     {
-        $userModel = new UserModel();
-        $loggedUserId = session()->get('loggedInUser');
-        $userInfo = $userModel->find($loggedUserId);
 
         $headerData = [
             'title' => 'Usuarios',
-            'userInfo' => $userInfo,
+            'userInfo' => $this->userInfo,
         ];
 
         return view('header', $headerData)
@@ -49,28 +59,21 @@ class TipoCrud extends BaseController
 
     public function store()
     {
-        $tipoModel = new tipoModel();
-        $data = [
+        $data = (object)[
             'nombre' => $this->request->getVar('name'),
         ];
-    $tipoModel->insert($data);
-    return $this->response->redirect(site_url('/tipos-list'));
+        $this->tipoModel->insert($data);
+        return $this->response->redirect(site_url('/tipos-list'));
     }
 
     public function edit($id = null)
     {
-        $userModel = new UserModel();
-        $loggedUserId = session()->get('loggedInUser');
-        $userInfo = $userModel->find($loggedUserId);
-
         $headerData = [
             'title' => 'Editar tipo',
-            'userInfo' => $userInfo,
+            'userInfo' => $this->userInfo,
         ];
 
-        $tipoModel = new tipoModel();
-
-        $data['tipo_obj'] = $tipoModel->where('id',$id)->first();
+        $data['tipo_obj'] = $this->tipoModel->where('id',$id)->first();
 
         return view('header', $headerData)
             . view('menu')
@@ -80,20 +83,18 @@ class TipoCrud extends BaseController
 
     public function update()
     {
-        $tipoModel = new tipoModel();
         $id = $this->request->getVar('id');
-        $data = [
+        $data = (object)[
             'nombre' => $this->request->getVar('name'),
         ];
 
-        $tipoModel->update($id,$data);
+        $this->tipoModel->update($id,$data);
         return $this->response->redirect(site_url('/tipos-list'));
     }
 
     public function delete($id = null)
     {
-        $tipoModel = new tipoModel();
-        $data['tipo'] = $tipoModel->where('id',$id)->delete($id);
+        $data['tipo'] = $this->tipoModel->where('id',$id)->delete($id);
         return $this->response->redirect(site_url('/tipos-list'));
     }
 }
