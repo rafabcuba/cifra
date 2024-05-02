@@ -31,10 +31,18 @@
 
 <script>
   $(document).ready( function () {
-    $('#disciplina-report').DataTable({
-      "language": {
-        "url": "/datatables/es-MX.json"
-      }
-    });
+    var table = $('#disciplina-report').DataTable( {
+      layout: {
+        topStart: 'buttons'
+      },
+      buttons: true,
+      language: {
+        url: "/datatables/es-MX.json"
+      },  
+      buttons: ['copy', 'excel', 'pdf']
+    } 
+  
+  );
+  
   } );
 </script>
