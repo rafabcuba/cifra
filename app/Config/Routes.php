@@ -45,6 +45,13 @@ $routes->group('', ['filter' => 'AuthCheck'], static function ($routes) {
   $routes->get('entidad-edit/(:num)', 'EntidadCrud::edit/$1');
   $routes->post('entidad-update', 'EntidadCrud::update');
   $routes->get('entidad-delete/(:num)', 'EntidadCrud::delete/$1');
+
+  $routes->get('disciplinas-list', 'DisciplinaCrud::index');
+  $routes->get('disciplina-form', 'DisciplinaCrud::create');
+  $routes->post('disciplina-submit-form', 'DisciplinaCrud::store');
+  $routes->get('disciplina-edit/(:num)', 'DisciplinaCrud::edit/$1');
+  $routes->post('disciplina-update', 'DisciplinaCrud::update');
+  $routes->get('disciplina-delete/(:num)', 'DisciplinaCrud::delete/$1');
 });
 
 

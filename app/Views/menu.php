@@ -10,20 +10,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="#"> <i class="fa fa-home" aria-hidden="true"></i> Inicio</a>
+            <a class="nav-link" aria-current="page" href="/"> <i class="fa fa-home" aria-hidden="true"></i> Inicio</a>
             </li>
             
             <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fa-solid fa-file-pen"></i> Captación
-            </a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#"><i class="fa fa-file-pen"></i> Captar disciplina estadística</a></li>
-                <li><a class="dropdown-item" href="#"><i class="fa fa-edit" aria-hidden="true"></i> Captar datos 2</a></li>
-                <li><a class="dropdown-item" href="#"><i class="fa fa-edit" aria-hidden="true"></i> Captar datos 3</a></li>
-                <li><a class="dropdown-item" href="#"><i class="fa fa-edit" aria-hidden="true"></i> Captar datos 4</a></li>
-                <li><a class="dropdown-item" href="#"><i class="fa fa-edit" aria-hidden="true"></i> Captar datos 5</a></li>
-            </ul>
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fa-solid fa-file-pen"></i> Captación
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="<?= site_url('/disciplina-form'); ?>"><i class="fa fa-file-pen"></i> Captar disciplina estadística</a></li>
+                </ul>
             </li>
 
             <li class="nav-item dropdown">
@@ -31,14 +27,11 @@
                 <i class="fa fa-file-lines" aria-hidden="true"></i> Reportes
             </a>
             <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="<?= site_url('/disciplinas-list'); ?>"><i class="fa-solid fa-pencil-alt"></i> Captaciones</a></li>
                 <li><a class="dropdown-item" href="#"><i class="fa-solid fa-chart-bar"></i> Disciplina estadística</a></li>
                 <li><a class="dropdown-item" href="#"><i class="fa fa-calculator" aria-hidden="true"></i> Consolidado</a></li>
             </ul>
             </li>
-
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="#"><i class="fa fa-cog" aria-hidden="true"></i> Administración</a>
-            </li> -->
 
             <?php if($userInfo['admin']): ?>
 
@@ -52,19 +45,20 @@
                 <li><a class="dropdown-item" href="<?= site_url('tipos-list'); ?>"><i class="fa-solid fa-table-list"></i> Tipo de entidad</a></li>
                 <li><a class="dropdown-item" href="<?= site_url('formularios-list'); ?>"><i class="fa-solid fa-edit"></i> Formularios</a></li>
                 <li><a class="dropdown-item" href="<?= site_url('entidades-list'); ?>"><i class="fa-solid fa-building"></i> Entidades</a></li>
+                <li><a class="dropdown-item" href="<?= site_url('disciplinas-list'); ?>"><i class="fa-solid fa-chart-bar"></i> Disciplina</a></li>
             </ul>
             </li>
 
             <?php endif; ?>
 
-            <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <i class="fa-solid fa-shield-halved"></i> Seguridad
-            </a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="#"><i class="fa fa-key" aria-hidden="true"></i> Cambiar Contraseña</a></li>
-            </ul>
-            </li>
+            <!-- <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-shield-halved"></i> Seguridad
+                </a>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#"><i class="fa fa-key" aria-hidden="true"></i> Cambiar Contraseña</a></li>
+                </ul>
+            </li> -->
         </ul>
 
 
