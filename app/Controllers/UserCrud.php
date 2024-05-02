@@ -47,7 +47,7 @@ class UserCrud extends BaseController
     public function create()
     {
         $headerData = [
-            'title' => 'Usuarios',
+            'title' => 'Adicionar usuario',
             'userInfo' => $this->userInfo,
         ];
 

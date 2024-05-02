@@ -41,7 +41,7 @@ class DisciplinaCrud extends BaseController
     {
         //
         $headerData = [
-            'title' => 'Tipos',
+            'title' => 'Disciplina estadística',
             'userInfo' => $this->userInfo,
         ];
 
@@ -92,7 +92,7 @@ class DisciplinaCrud extends BaseController
     public function edit($id = null)
     {
         $headerData = [
-            'title' => 'Editar entidad',
+            'title' => 'Editar disciplina',
             'userInfo' => $this->userInfo,
         ];
 

@@ -47,7 +47,7 @@ class TipoCrud extends BaseController
     {
 
         $headerData = [
-            'title' => 'Usuarios',
+            'title' => 'Adicionar tipo',
             'userInfo' => $this->userInfo,
         ];
 

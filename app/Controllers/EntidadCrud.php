@@ -37,7 +37,7 @@ class EntidadCrud extends BaseController
     {
         //
         $headerData = [
-            'title' => 'Tipos',
+            'title' => 'Entidades',
             'userInfo' => $this->userInfo,
         ];
 
@@ -55,7 +55,7 @@ class EntidadCrud extends BaseController
     {
 
         $headerData = [
-            'title' => 'Usuarios',
+            'title' => 'Crear entidad',
             'userInfo' => $this->userInfo,
         ];
 

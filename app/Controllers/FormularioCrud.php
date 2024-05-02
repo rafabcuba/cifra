@@ -31,7 +31,7 @@ class FormularioCrud extends BaseController
     {
         //
         $headerData = [
-            'title' => 'Tipos',
+            'title' => 'Formularios',
             'userInfo' => $this->userInfo,
         ];
 
@@ -46,7 +46,7 @@ class FormularioCrud extends BaseController
     public function create()
     {
         $headerData = [
-            'title' => 'Usuarios',
+            'title' => 'Adicionar formulario',
             'userInfo' => $this->userInfo,
         ];
 

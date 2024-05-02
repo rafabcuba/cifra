@@ -46,7 +46,7 @@ class MunicipioCrud extends BaseController
     public function create()
     {
         $headerData = [
-            'title' => 'Usuarios',
+            'title' => 'Adicionar municipio',
             'userInfo' => $this->userInfo,
         ];
 
@@ -68,7 +68,7 @@ class MunicipioCrud extends BaseController
     public function edit($id = null)
     {
         $headerData = [
-            'title' => 'Editar usuario',
+            'title' => 'Editar municipio',
             'userInfo' => $this->userInfo,
         ];
 

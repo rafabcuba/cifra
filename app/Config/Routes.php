@@ -8,7 +8,8 @@ use CodeIgniter\Router\RouteCollection;
 
 // rutas que requieren autenticación:
 $routes->group('', ['filter' => 'AuthCheck'], static function ($routes) {
-  $routes->get('/', 'Home::index');
+  // $routes->get('/', 'Home::index');
+  $routes->get('/', 'Reportes::disciplina');
   $routes->get('/dashboard', 'Dashboard::index');
 
   $routes->get('users-list', 'UserCrud::index');
@@ -52,6 +53,8 @@ $routes->group('', ['filter' => 'AuthCheck'], static function ($routes) {
   $routes->get('disciplina-edit/(:num)', 'DisciplinaCrud::edit/$1');
   $routes->post('disciplina-update', 'DisciplinaCrud::update');
   $routes->get('disciplina-delete/(:num)', 'DisciplinaCrud::delete/$1');
+
+  $routes->get('reportes/disciplina-estadistica', 'Reportes::disciplina');
 });
 
 

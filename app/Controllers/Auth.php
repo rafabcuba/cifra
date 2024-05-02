@@ -151,7 +151,7 @@ class Auth extends BaseController
 
                   session()->set('loggedInUser', $userId);
 
-                  return redirect()->to('/dashboard');
+                  return redirect()->to('/');
             }
 
         }

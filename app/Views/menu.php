@@ -28,8 +28,8 @@
             </a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="<?= site_url('/disciplinas-list'); ?>"><i class="fa-solid fa-pencil-alt"></i> Captaciones</a></li>
-                <li><a class="dropdown-item" href="#"><i class="fa-solid fa-chart-bar"></i> Disciplina estadística</a></li>
-                <li><a class="dropdown-item" href="#"><i class="fa fa-calculator" aria-hidden="true"></i> Consolidado</a></li>
+                <li><a class="dropdown-item" href="<?= site_url('/reportes/disciplina-estadistica'); ?>"><i class="fa-solid fa-chart-bar"></i> Disciplina estadística</a></li>
+                <!-- <li><a class="dropdown-item" href="#"><i class="fa fa-calculator" aria-hidden="true"></i> Consolidado</a></li> -->
             </ul>
             </li>
 
