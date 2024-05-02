@@ -95,7 +95,28 @@ class FormularioCrud extends BaseController
 
     public function delete($id = null)
     {
-        $data['formulario'] = $this->formularioModel->where('id',$id)->delete($id);
-        return $this->response->redirect(site_url('/formularios-list'));
+        try {
+            $deleted = true;
+            $this->formularioModel->where('id',$id)->delete($id);
+        }
+        catch (\CodeIgniter\Database\Exceptions\DatabaseException $e){
+            $deleted = false;
+            log_message('error', 'Database error: ' . $e->getMessage());
+            $data['error'] = 'No se ha podido eliminar el registro';
+        }
+        
+        if ($deleted){
+            return $this->response->redirect(site_url('/formularios-list'));
+        }
+        else {
+            $headerData = [
+                'title' => 'Editar municipio',
+                'userInfo' => $this->userInfo,
+            ];
+            return view('header', $headerData)
+            . view('menu')
+            . view('errors/custom_error',$data)
+            . view('footer');
+        }
     }
 }

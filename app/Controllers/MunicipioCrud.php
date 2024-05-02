@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\HTTP\RequestInterface;
+use Exception;
 use Psr\Log\LoggerInterface;
 use App\Models\MunicipioModel;
 use App\Models\UserModel;
@@ -93,8 +94,29 @@ class MunicipioCrud extends BaseController
 
     public function delete($id = null)
     {
-        $data['municipio'] = $this->municipioModel->where('id',$id)->delete($id);
-        return $this->response->redirect(site_url('/municipios-list'));
+        try {
+            $deleted = true;
+            $this->municipioModel->where('id',$id)->delete($id);
+        }
+        catch (\CodeIgniter\Database\Exceptions\DatabaseException $e){
+            $deleted = false;
+            log_message('error', 'Database error: ' . $e->getMessage());
+            $data['error'] = 'No se ha podido eliminar el registro';
+        }
+        
+        if ($deleted){
+            return $this->response->redirect(site_url('/municipios-list'));
+        }
+        else {
+            $headerData = [
+                'title' => 'Editar municipio',
+                'userInfo' => $this->userInfo,
+            ];
+            return view('header', $headerData)
+            . view('menu')
+            . view('errors/custom_error',$data)
+            . view('footer');
+        }
     }
 
 }
