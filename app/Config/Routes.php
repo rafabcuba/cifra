@@ -55,6 +55,12 @@ $routes->group('', ['filter' => 'AuthCheck'], static function ($routes) {
   $routes->get('disciplina-delete/(:num)', 'DisciplinaCrud::delete/$1');
 
   $routes->get('reportes/disciplina-estadistica', 'Reportes::disciplina');
+  $routes->get('reportes/disciplina-estadistica-x-fecha', 'Reportes::DisciplinaXFecha');
+  $routes->post('reportes/disciplina-x-fecha-action', 'Reportes::disciplina/fecha');
+  $routes->get('reportes/disciplina-estadistica-x-municipio', 'Reportes::DisciplinaXMunicipio');
+  $routes->post('reportes/disciplina-x-municipio-action', 'Reportes::disciplina/municipio');
+  $routes->get('reportes/disciplina-estadistica-x-formulario', 'Reportes::DisciplinaXFormulario');
+  $routes->post('reportes/disciplina-x-formulario-action', 'Reportes::disciplina/formulario');
 });
 
 
