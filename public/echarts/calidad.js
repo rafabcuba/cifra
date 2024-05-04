@@ -1,5 +1,6 @@
 var chartDom = document.getElementById('container-calidad');
 var myChart = echarts.init(chartDom);
+var colorPalette = ['#91cc75', '#ee6666']
 var option;
 
 option = {
@@ -28,6 +29,7 @@ option = {
       name: 'calidad',
       type: 'pie',
       radius: '70%',
+      color: colorPalette,
       data: [
         { value: entiempoc, name: 'En tiempo' },
         { value: indisciplinasc, name: 'Indisciplinas' },

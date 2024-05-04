@@ -10,8 +10,8 @@ use CodeIgniter\Router\RouteCollection;
 $routes->group('', ['filter' => 'AuthCheck'], static function ($routes) {
   // $routes->get('/', 'Home::index');
   // $routes->get('/', 'Reportes::disciplina');
-  $routes->get('/', 'Dashboard::index');
-  $routes->get('/dashboard', 'Dashboard::index');
+  $routes->get('/', 'Reportes::graficas');
+  $routes->get('/dashboard', 'Reportes::graficas');
 
   $routes->get('users-list', 'UserCrud::index');
   $routes->get('user-form', 'UserCrud::create');
@@ -62,6 +62,11 @@ $routes->group('', ['filter' => 'AuthCheck'], static function ($routes) {
   $routes->post('reportes/disciplina-x-municipio-action', 'Reportes::disciplina/municipio');
   $routes->get('reportes/disciplina-estadistica-x-formulario', 'Reportes::DisciplinaXFormulario');
   $routes->post('reportes/disciplina-x-formulario-action', 'Reportes::disciplina/formulario');
+
+  $routes->get('reportes/graficas-x-fecha', 'Reportes::GraficasXFecha');
+  $routes->get('reportes/graficas-x-municipio', 'Reportes::GraficasXMunicipio');
+  $routes->get('reportes/graficas-x-formulario', 'Reportes::GraficasXFormulario');
+  $routes->post('reportes/graficas-action/(:alpha)', 'Reportes::graficas/$1');
 });
 
 

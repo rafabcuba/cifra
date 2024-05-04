@@ -221,4 +221,123 @@ class Reportes extends BaseController
             . view('wizards/formulario_wizard',$data)
             . view('footer');
     }
+
+    public function GraficasXFecha()
+    {
+        $headerData = [
+            'title' => 'Escoger rango de fechas',
+            'userInfo' => $this->userInfo,
+            'action' => '/reportes/graficas-action/fecha',
+        ];
+
+        return view('header', $headerData)
+            . view('menu')
+            . view('wizards/date_wizard')
+            . view('footer');
+    }
+
+    public function GraficasXMunicipio()
+    {
+        $headerData = [
+            'title' => 'Escoger municipio',
+            'userInfo' => $this->userInfo,
+            'action' => '/reportes/graficas-action/municipio',
+        ];
+
+        $municipios = $this->municipioModel->orderBy('id', 'ASC')->findAll();
+
+        $data = [
+            'municipios' => $municipios,
+        ];
+
+        return view('header', $headerData)
+            . view('menu')
+            . view('wizards/municipio_wizard',$data)
+            . view('footer');
+    }
+
+    public function GraficasXFormulario()
+    {
+        $headerData = [
+            'title' => 'Escoger formulario',
+            'userInfo' => $this->userInfo,
+            'action' => '/reportes/graficas-action/formulario',
+        ];
+
+        $formularios = $this->formularioModel->orderBy('id', 'ASC')->findAll();
+
+        $data = [
+            'formularios' => $formularios,
+        ];
+
+        return view('header', $headerData)
+            . view('menu')
+            . view('wizards/formulario_wizard',$data)
+            . view('footer');
+    }
+
+    public function graficas($filter = null)
+    {
+        $detalle = '';
+        if ($filter == 'fecha') {
+            $fecha_inicial = $this->request->getVar('fecha_inicial');
+            $fecha_final = $this->request->getVar('fecha_final');
+            $detalle = 'desde: '.$fecha_inicial.' hasta: '.$fecha_final;
+            $title = 'Gráficas estadísticas por '.$filter.' ('.$detalle.')';
+        } else if ($filter == 'municipio') {
+            $municipio_id = $this->request->getVar('municipio_id');
+            $detalle = $this->municipioModel->find($municipio_id)['nombre'];
+            $title = 'Gráficas estadísticas por '.$filter.' ('.$detalle.')';
+        } else if ($filter == 'formulario') {
+            $formulario_id = $this->request->getVar('formulario_id');
+            $detalle = $this->formularioModel->find($formulario_id)['nombre'];
+            $title = 'Gráficas estadísticas por '.$filter.' ('.$detalle.')';
+        } else {
+            $title = 'Gráficas estadísticas generales';
+        }
+
+        $headerData = [
+            'title' => $title,
+            'userInfo' => $this->userInfo,
+        ];
+
+        $db = db_connect();
+        $db->simpleQuery("SET lc_time_names = 'es_ES'");
+
+        $disciplinas = $this->get_disciplina_query($filter)->getResult('array');
+        $calidad = $this->get_calidad_query($filter)->getResult('array');
+        $calidadxmes = $this->get_calidad_x_mes_query($filter)->getResult('array');
+
+        $municipios = array_column($disciplinas,'nombre');
+        $entiempo = array_column($disciplinas,'entiempo');
+        $indisciplinas = array_column($disciplinas,'indisciplinas');
+        $totalci = array_column($disciplinas,'total');
+        $entiempoc = array_column($calidad,'entiempo');
+        $indisciplinasc = array_column($calidad,'indisciplinas');
+        $meses = array_column($calidadxmes,'mes');
+        $indisciplinasm = array_column($calidadxmes,'indisciplinas');
+        
+        $porcentajes = [];
+        foreach ($entiempo as $clave => $valor) {
+            $porcentaje = round(($valor / $totalci[$clave]) * 100,1);
+            $porcentajes[] = $porcentaje;
+        }
+
+        $data = [
+            'municipios' => json_encode($municipios, JSON_HEX_TAG),
+            'entiempo' => json_encode($entiempo, JSON_HEX_TAG),
+            'indisciplinas' => json_encode($indisciplinas, JSON_HEX_TAG),
+            'totalci' => json_encode($totalci, JSON_HEX_TAG),
+            'porcentajes' => json_encode($porcentajes, JSON_HEX_TAG),
+            'entiempoc' => json_encode($entiempoc, JSON_HEX_TAG),
+            'indisciplinasc' => json_encode($indisciplinasc, JSON_HEX_TAG),
+            'meses' => json_encode($meses, JSON_HEX_TAG),
+            'indisciplinasm' => json_encode($indisciplinasm, JSON_HEX_TAG),
+        ];
+
+        return view('header', $headerData)
+            . view('menu')
+            . view('dashboard/index', $data)
+            . view('footer');
+    }
 }
