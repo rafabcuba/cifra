@@ -153,8 +153,26 @@ class Reportes extends BaseController
     public function disciplina($filter = null)
     {
         //
+        $detalle = '';
+        if ($filter == 'fecha') {
+            $fecha_inicial = $this->request->getVar('fecha_inicial');
+            $fecha_final = $this->request->getVar('fecha_final');
+            $detalle = 'desde: '.$fecha_inicial.' hasta: '.$fecha_final;
+            $title = 'Disciplina estadística por '.$filter.' ('.$detalle.')';
+        } else if ($filter == 'municipio') {
+            $municipio_id = $this->request->getVar('municipio_id');
+            $detalle = $this->municipioModel->find($municipio_id)['nombre'];
+            $title = 'Disciplina estadística por '.$filter.' ('.$detalle.')';
+        } else if ($filter == 'formulario') {
+            $formulario_id = $this->request->getVar('formulario_id');
+            $detalle = $this->formularioModel->find($formulario_id)['nombre'];
+            $title = 'Disciplina estadística por '.$filter.' ('.$detalle.')';
+        } else {
+            $title = 'Disciplina estadística';
+        }
+
         $headerData = [
-            'title' => 'Disciplina estadística',
+            'title' => $title,
             'userInfo' => $this->userInfo,
         ];
 

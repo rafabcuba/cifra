@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" sizes="32x32" href="<?= site_url('images/icon.png'); ?>" />
-    <title>Autenticarse</title>
+    <title>CIFRA</title>
     <link rel="stylesheet" href="<?= site_url('css/bootstrap.min.css'); ?>" type="text/css">
     <link rel="stylesheet" href="<?= site_url('fontawesome/css/all.min.css'); ?>" type="text/css">
     <link rel="stylesheet" href="<?= site_url('fontawesome/css/svg-with-js.min.css'); ?>" type="text/css">
@@ -16,7 +16,7 @@
       <div class="d-flex justify-content-center h-100">
         <div class="card">
           <div class="card-header text-center">
-            <img src="<?= site_url('images/icon.png'); ?>" alt="Indicadores" width="120" height="auto">
+            <img src="<?= site_url('images/Cifra.png'); ?>" alt="Cifra" width="250" height="auto">
             <h3>Ingrese sus credenciales</h3>
           </div>
           <div class="card-body">

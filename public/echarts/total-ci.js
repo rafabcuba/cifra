@@ -43,7 +43,7 @@ option = {
   },
   series: [
     {
-      name: 'Total CI',
+      name: 'Total de captaciones',
       type: 'bar',
       stack: 'total',
       color: '#0462a0',
