@@ -9,7 +9,8 @@ use CodeIgniter\Router\RouteCollection;
 // rutas que requieren autenticación:
 $routes->group('', ['filter' => 'AuthCheck'], static function ($routes) {
   // $routes->get('/', 'Home::index');
-  $routes->get('/', 'Reportes::disciplina');
+  // $routes->get('/', 'Reportes::disciplina');
+  $routes->get('/', 'Dashboard::index');
   $routes->get('/dashboard', 'Dashboard::index');
 
   $routes->get('users-list', 'UserCrud::index');

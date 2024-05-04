@@ -1,29 +1,45 @@
 <div class="container-fluid mt-2">
-  <div class="card">
+  <div class="card" style="height: 30rem;">
     <div class="card-header">
       <?= $title; ?>
     </div>
     <div class="card-body">
-      
-      <div class="row pt-3">
-        <div class="col-md-8 offset-2">
-          <table class="table">
-            <thead>
-              <tr>
-                <th scope="col">name</th>
-                <th scope="col">email</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><?= $userInfo['name']; ?></td>
-                <td><?= $userInfo['email']; ?></td>
-              </tr>
-            </tbody>
-          </table>
+      <script>
+          var municipios = <?php echo $municipios; ?>;
+          var entiempo = <?php echo $entiempo; ?>;
+          var indisciplina = <?php echo $indisciplinas; ?>;
+          var totalci = <?php echo $totalci; ?>;
+          var porcentajes = <?php echo $porcentajes; ?>;
+          var entiempoc = <?php echo $entiempoc; ?>;
+          var indisciplinasc = <?php echo $indisciplinasc; ?>;
+          var meses = <?php echo $meses; ?>;
+          var indisciplinasm = <?php echo $indisciplinasm; ?>;
+      </script>
+
+      <div class="row">
+        <div class="col col-md-6">
+          <?= $this->include('dashboard/detalle-disciplina') ?>
         </div>
-      </div>  
-    
+        <div class="col col-md-6">
+          <?= $this->include('dashboard/total-ci') ?>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col col col-md-6">
+        <?= $this->include('dashboard/porcentajes') ?>
+        </div>
+        <div class="col col col-md-6">
+        <?= $this->include('dashboard/calidad') ?>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <?= $this->include('dashboard/indisciplinas-x-mes') ?>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>

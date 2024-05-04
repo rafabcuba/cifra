@@ -34,14 +34,8 @@ class Reportes extends BaseController
         //
     }
 
-    public function disciplina($filter = null)
+    public function get_disciplina_query($filter = null)
     {
-        //
-        $headerData = [
-            'title' => 'Disciplina estadística',
-            'userInfo' => $this->userInfo,
-        ];
-
         $db = db_connect();
 
         $condition = '';
@@ -61,6 +55,7 @@ class Reportes extends BaseController
         $query = '
         SELECT
             m.nombre AS nombre,
+            SUM( CASE WHEN d.indisciplina = FALSE THEN 1 ELSE 0 END ) AS entiempo,
             SUM( CASE WHEN d.indisciplina = TRUE THEN 1 ELSE 0 END ) AS indisciplinas,
             COUNT(*) AS total 
         FROM
@@ -75,6 +70,95 @@ class Reportes extends BaseController
         ';
 
         $query= $db->query($query);
+
+        return $query;
+    }
+
+    public function get_calidad_query($filter = null)
+    {
+        $db = db_connect();
+
+        $condition = '';
+
+        if ($filter == 'fecha') {
+            $fecha_inicial = $this->request->getVar('fecha_inicial');
+            $fecha_final = $this->request->getVar('fecha_final');
+            $condition = 'WHERE d.fecha >= "'.$fecha_inicial.'" AND d.fecha <= "'.$fecha_final.'"';
+        } else if ($filter == 'municipio') {
+            $municipio_id = $this->request->getVar('municipio_id');
+            $condition = 'WHERE m.id = '.$municipio_id;
+        } else if ($filter == 'formulario') {
+            $formulario_id = $this->request->getVar('formulario_id');
+            $condition = 'WHERE f.id = '.$formulario_id;
+        }
+
+        $query = '
+        SELECT
+            SUM( CASE WHEN d.indisciplina = FALSE THEN 1 ELSE 0 END ) AS entiempo,
+            SUM( CASE WHEN d.indisciplina = TRUE THEN 1 ELSE 0 END ) AS indisciplinas,
+            COUNT(*) AS total 
+        FROM
+            disciplina d
+            INNER JOIN entidades e ON d.entidad_id = e.id
+            INNER JOIN municipios m ON e.municipio_id = m.id
+            INNER JOIN formularios f ON d.formulario_id = f.id '
+            .$condition
+            ;
+
+        $query= $db->query($query);
+
+        return $query;
+    }
+
+    public function get_calidad_x_mes_query($filter = null)
+    {
+        $db = db_connect();
+
+        $condition = '';
+
+        if ($filter == 'fecha') {
+            $fecha_inicial = $this->request->getVar('fecha_inicial');
+            $fecha_final = $this->request->getVar('fecha_final');
+            $condition = 'WHERE d.fecha >= "'.$fecha_inicial.'" AND d.fecha <= "'.$fecha_final.'"';
+        } else if ($filter == 'municipio') {
+            $municipio_id = $this->request->getVar('municipio_id');
+            $condition = 'WHERE m.id = '.$municipio_id;
+        } else if ($filter == 'formulario') {
+            $formulario_id = $this->request->getVar('formulario_id');
+            $condition = 'WHERE f.id = '.$formulario_id;
+        }
+
+        $query = "
+        SELECT
+            MONTHNAME(d.fecha) AS mes,
+            SUM( CASE WHEN d.indisciplina = FALSE THEN 1 ELSE 0 END ) AS entiempo,
+            SUM( CASE WHEN d.indisciplina = TRUE THEN 1 ELSE 0 END ) AS indisciplinas,
+            COUNT(*) AS total 
+        FROM
+            disciplina d
+            INNER JOIN entidades e ON d.entidad_id = e.id
+            INNER JOIN municipios m ON e.municipio_id = m.id
+            INNER JOIN formularios f ON d.formulario_id = f.id "
+        .$condition."
+        GROUP BY MONTHNAME(d.fecha)
+        ORDER BY MONTHNAME(d.fecha) ASC
+        "
+        ;
+
+        $query= $db->query($query);
+
+        return $query;
+    }
+
+    public function disciplina($filter = null)
+    {
+        //
+        $headerData = [
+            'title' => 'Disciplina estadística',
+            'userInfo' => $this->userInfo,
+        ];
+
+        $query = $this->get_disciplina_query($filter);
 
         $data['municipios'] = $query->getResult('array');
 
